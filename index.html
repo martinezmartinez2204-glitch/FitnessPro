@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitnessPro - Trainingsplaner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>💪 FitnessPro</h1>
+            <p class="subtitle">Dein intelligenter Trainingsplaner für Hochleistungssportler</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="nav-btn active" data-view="week">Wochenansicht</button>
+            <button class="nav-btn" data-view="month">Monatsansicht</button>
+            <button class="nav-btn" data-view="year">Jahresansicht</button>
+            <button class="nav-btn" data-view="history">Trainingshistorie</button>
+        </nav>
+
+        <!-- Date Navigation -->
+        <div class="date-navigation">
+            <button id="prevBtn" class="nav-arrow">← Zurück</button>
+            <div class="current-date">
+                <h2 id="currentDateDisplay">Woche 1</h2>
+                <p id="dateRange"></p>
+            </div>
+            <button id="nextBtn" class="nav-arrow">Weiter →</button>
+            <button id="todayBtn" class="nav-button">Heute</button>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Week View -->
+            <div id="weekView" class="view active">
+                <div class="week-grid">
+                    <!-- Dynamisch generiert -->
+                </div>
+            </div>
+
+            <!-- Month View -->
+            <div id="monthView" class="view">
+                <div class="calendar-header">
+                    <h3 id="monthTitle"></h3>
+                </div>
+                <div class="calendar-weekdays">
+                    <div>Mo</div>
+                    <div>Di</div>
+                    <div>Mi</div>
+                    <div>Do</div>
+                    <div>Fr</div>
+                    <div>Sa</div>
+                    <div>So</div>
+                </div>
+                <div class="calendar-grid">
+                    <!-- Dynamisch generiert -->
+                </div>
+            </div>
+
+            <!-- Year View -->
+            <div id="yearView" class="view">
+                <div class="year-grid">
+                    <!-- Dynamisch generiert -->
+                </div>
+            </div>
+
+            <!-- History View -->
+            <div id="historyView" class="view">
+                <div class="history-controls">
+                    <input type="text" id="searchExercise" placeholder="Nach Übung suchen..." class="search-input">
+                    <select id="exerciseFilter" class="filter-select">
+                        <option value="">Alle Übungen</option>
+                    </select>
+                </div>
+                <div class="history-list">
+                    <!-- Dynamisch generiert -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Training Form Modal -->
+        <div id="trainingModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">Neue Trainingseinheit</h2>
+                
+                <form id="trainingForm" class="training-form">
+                    <div class="form-group">
+                        <label for="exerciseName">Übungsname *</label>
+                        <input type="text" id="exerciseName" placeholder="z.B. Bankdrücken" required 
+                               autocomplete="off" list="exerciseList">
+                        <datalist id="exerciseList">
+                            <!-- Dynamisch gefüllt -->
+                        </datalist>
+                        <small class="suggestions" id="exerciseSuggestions"></small>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="weight">Gewicht (kg) *</label>
+                            <input type="number" id="weight" step="0.5" min="0" placeholder="z.B. 80" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reps">Wiederholungen *</label>
+                            <input type="number" id="reps" step="1" min="1" placeholder="z.B. 12" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sets">Sätze *</label>
+                            <input type="number" id="sets" step="1" min="1" value="3" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Notizen</label>
+                        <textarea id="notes" placeholder="z.B. Guter Fokus, schnelle Wiederholungen..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trainingDate">Datum *</label>
+                        <input type="date" id="trainingDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="duration">Dauer (Minuten)</label>
+                        <input type="number" id="duration" step="1" min="0" placeholder="z.B. 30">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Speichern</button>
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">Abbrechen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Workout Details Modal -->
+        <div id="detailsModal" class="modal">
+            <div class="modal-content modal-content-large">
+                <span class="close">&times;</span>
+                <h2>Trainingsdetails</h2>
+                <div id="detailsContent" class="details-content">
+                    <!-- Dynamisch generiert -->
+                </div>
+                <div class="modal-actions">
+                    <button id="editBtn" class="btn btn-primary">Bearbeiten</button>
+                    <button id="deleteBtn" class="btn btn-danger">Löschen</button>
+                    <button id="closeDetailsBtn" class="btn btn-secondary">Schließen</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Panel -->
+        <aside class="stats-panel">
+            <h3>📊 Heute Trainiert</h3>
+            <div id="todayStats" class="stats-content">
+                <p class="stat-item">
+                    <span class="stat-label">Trainingseinheiten:</span>
+                    <span class="stat-value" id="todayCount">0</span>
+                </p>
+                <p class="stat-item">
+                    <span class="stat-label">Gesamtgewicht:</span>
+                    <span class="stat-value" id="totalWeight">0 kg</span>
+                </p>
+                <p class="stat-item">
+                    <span class="stat-label">Trainingsdauer:</span>
+                    <span class="stat-value" id="totalDuration">0 min</span>
+                </p>
+            </div>
+        </aside>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="storage.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

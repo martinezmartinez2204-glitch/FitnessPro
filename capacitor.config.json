@@ -1,0 +1,8 @@
+{
+  "appId": "com.fitnesspro.app",
+  "appName": "FitnessPro",
+  "webDir": "dist",
+  "ios": {
+    "contentInset": "automatic"
+  }
+}
